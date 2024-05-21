@@ -31,8 +31,8 @@ $availDomain = "IGuL:***"
 
 
 #vm size
-$cpus = 4 #number of cpu cores
-$ram = 24 #memory size in gb
+$cpus = 2 #number of cpu cores
+$ram = 12 #memory size in gb
 
 #session authentication parameters
 $profile = "DEFAULT"
@@ -40,7 +40,7 @@ $configFile = $env:USERPROFILE+"\.oci\config"
 
 $authParams = " --config-file $configFile --profile $profile  --auth security_token "
 
-$requestInterval = 60 #interval in seconds
+$requestInterval = 120 #interval in seconds
 $max = 60*60*24 / $requestInterval
 
 
@@ -105,7 +105,7 @@ For ($i = 0; $i -lt $max; $i++)
 
     #request instance creation
     #must be single line, cuz iex / powershell syntax bs
-    $response = & iex "& oci compute instance launch --no-retry --availability-domain $availDomain $authParams --compartment-id $tenancyId --image-id $imageId  --shape 'VM.Standard.A1.Flex' --shape-config `"{`'ocpus`':$cpus,`'memoryInGBs`':$ram}`"  --subnet-id $subnetId " 2>&1
+    $response = & iex "& oci compute instance launch --no-retry --availability-domain $availDomain $authParams --compartment-id $tenancyId --image-id $imageId  --shape 'VM.Standard.A1.Flex' --shape-config `"{`'ocpus`':$cpus,`'memoryInGBs`':$ram}`"  --subnet-id $subnetId --display-name my_oci --ssh-authorized-keys-file id_rsa.pub " 2>&1
 
     If($silent -eq 0)
     {
